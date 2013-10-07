@@ -1,0 +1,40 @@
+id,route_id,number,name,points_num
+5001,50,1,Avenida de las Industrias y casi Homero (Maquilas),0
+5002,50,2,Avenida de las Industrias y Parque P. de León,0
+5003,50,3,Avenida de las Industrias y Avenida Dostoyevski,0
+5004,50,4,Guadalupe Juárez y Avenida de las Industrias,0
+5005,50,5,Guadalupe Juárez y Juan Baca,0
+5006,50,6,Ingeniero Carrillo y Guadalupe Juárez,0
+5007,50,7,Progreso Nacional y Guadalupe Reza,0
+5008,50,8,Mina Los Ángeles y Mina Roncesvalles,0
+5009,50,9,Mina Los Ángeles y Mina Los Reyes,0
+5010,50,10,Mina Las Milpillas y Mina Moctezuma,0
+5011,50,11,Mina San Agustín y Mina Los Ángeles,0
+5012,50,12,Desierto Mojave y Avenida de las Industrias,0
+5013,50,13,Mina Los Ángeles y Mina Ávalos,0
+5014,50,14,Desierto de Sahara y Mina Los Navegantes,0
+5015,50,15,Avenida de las Industrias y Mina San Agustín,0
+5016,50,16,Avenida de las Industrias y Mina Los Reyes,0
+5017,50,17,Avenida de las Industrias y Progreso Nacional,0
+5018,50,18,Guadalupe Juárez y Avenida de las Industrias,0
+5019,50,19,Avenida de las Industrias y Avenida Dostoyevski,0
+5020,50,20,Avenida de las Industrias y Parque P. de León,0
+5021,50,21,Avenida de las Industrias y casi Homero (Maquilas),0
+6101,61,1,Tecnológico frente a Planta FORD,0
+6102,61,2,Tecnológico frente a Bodega ALSUPER,0
+6103,61,3,Tecnológico y Santa Anita,0
+6104,61,4,Tecnológico y Miguel de Cervantes,0
+6105,61,5,Miguel de Cervantes frente a GRAINGER,0
+6106,61,6,Dostoyevski y Octavio Paz,0
+6107,61,7,Dostoyevski e Irving Wallace,0
+6108,61,8,Dostoyevski y Sosa Vera,0
+6109,61,9,Dostoyevski y Porfirio Parra,0
+6110,61,10,Dostoyevski frente ALSUPER,0
+6111,61,11,Dostoyevski y Consejo Técnico,0
+6112,61,12,Dostoyevski y Venceremos,0
+6113,61,13,Méndez y Salvador Elizondo,0
+6114,61,14,Virues y Gabriel García Márquez,0
+6115,61,15,Avenida de las Industrias y Gabriel García Márquez,0
+6116,61,16,Avenida de las Industrias y Maquiladora,0
+6117,61,17,Avenida de las Industrias y Avenida Homero,0
+6118,61,18,Avenida Homero y Nicolás Gogol,0
