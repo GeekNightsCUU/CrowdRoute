@@ -1,32 +1,3 @@
-<?php
-/*
-define('INSTRUCTIONS', 'Coloca el puntero azul en la posición de la parada que te indicamos luego haz clic en Continuar');
-if (isset($_POST['latitude']) AND isset($_POST['longitude'])) {
-	$latitude = floatval($_POST['latitude']);
-	$longitude = floatval($_POST['longitude']);
-	$sender_ip = $_SERVER['REMOTE_ADDR'];
-	$station_id = 1;
-	$time = time();
-
-	$file_db = new PDO('sqlite:crowdroute.sqlite');
-	$file_db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-	$insert = "INSERT INTO points (station_id, latitude, longitude, time, sender_ip) 
-					VALUES (:station_id, :latitude, :longitude, :time, :sender_ip)";
-	$stmt = $file_db->prepare($insert);
-
-	// Bind parameters to statement variables
-	$stmt->bindParam(':station_id', $station_id);
-	$stmt->bindParam(':latitude', 	$latitude);
-	$stmt->bindParam(':longitude', 	$longitude);
-	$stmt->bindParam(':time', 		$time);
-	$stmt->bindParam(':sender_ip', 	$sender_ip);
-
-	$stmt->execute();
-}
-*/
-?>
-</pre>
 <!doctype html>
 <html lang="en">
 <head>
@@ -87,14 +58,14 @@ if (isset($_POST['latitude']) AND isset($_POST['longitude'])) {
 		}
 
 		#canvas {
-			width: 560px;
-			height: 420px;
+			width: 100%;
+			height: 300px;
 		}
 
 		#signup {
-			width: 560px;
-			height: 620px;
-			margin: 20px auto 10px auto;
+			width: 90%;
+			height: 100%;
+			margin: 20px 20px 20px 20px;
 			padding: 15px;
 			position: relative;
 			background: #fafafa;
