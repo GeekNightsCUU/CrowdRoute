@@ -1,45 +1,19 @@
 <?php
-
-/*
- * 1 - Get a random station
- * 2 - Get all the info: Number, name, route
- * 3 - If the data was sent, save and start over again
- */
-
 function _index() {
 	$RenderTime = new RenderTime();
 	$RenderTime->startRenderTime();
 
-	$valid_post_data = isset($_POST['latitude'])
-							AND isset($_POST['longitude'])
-							AND isset($_POST['station_id']);
+	/*
+	 * 1 - Get a random station
+	 * 2 - Get all the info: Number, name, route
+	 * 3 - If the data was sent, save and start over again
+	 */
 
-	if ($valid_post_data) {
-		$station_id = intval($_POST['station_id']);
-		$latitude = floatval($_POST['latitude']);
-		$longitude = floatval($_POST['longitude']);
-		$sender_ip = $_SERVER['REMOTE_ADDR'];
-
-		$valid_latitude_longitude = $_POST['latitude'] != ''
-									AND $_POST['longitude'] != '';
-
-		if ($valid_latitude_longitude) {
-			// Create a point
-			$point = new Point();
-			$point->set('station_id', $station_id);
-			$point->set('latitude', $latitude);
-			$point->set('longitude', $longitude);
-			$point->set('sender_ip', $sender_ip);
-			$point->create();
-		} else {
-			//echo 'ERROR LAT LON';
-		}
-	}
-
-	// Get the next 
+	// Get the next
+	checkPostData();
 
 	// Station data
-	$station_id = 5012; // Hardcoded
+	$station_id = getNextStation();
 	$station = new Station();
 
 	// Get result set for that station ID
@@ -63,4 +37,89 @@ function _index() {
 	$data['body'][] = View::do_fetch(VIEW_PATH . 'main/index.php', $var);
 	View::do_dump(VIEW_PATH . 'template.php', $data);
 	View::do_dump(VIEW_PATH . 'footer_stats.php', $data);
+}
+
+function getNextStation() {
+	$min_points = 2; // Num of votes to stop requesting points
+	$ip_address = $_SERVER['REMOTE_ADDR'];
+
+	// First, get points with 
+	$db = getdbh();
+	$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+	// Get already voted places not submitted by the current user
+	$query = "SELECT station_id
+		FROM 'points'
+		WHERE sender_ip IS NOT '$ip_address'
+		GROUP BY station_id
+		HAVING count(1) BETWEEN 1 AND $min_points
+		;";
+
+	//echo $query;
+
+	$result = $db->query($query)->fetchAll();
+	foreach($result as $row) {
+		//print_r($row);
+	}
+
+	//echo 'Found: ' . count($result);
+	
+
+	if (count($result) == 0) {
+		// Get avaliable stations not voted by me
+		$query = "SELECT s.id
+			FROM 'stations' AS s
+			CROSS JOIN points AS p
+			WHERE s.id NOT IN (
+				SELECT p.station_id
+				FROM 'points' AS p
+				WHERE p.sender_ip IS '$ip_address'
+				GROUP BY p.station_id
+			)
+			;";
+
+		$result = $db->query($query)->fetchAll();
+		//echo 'Found: ' . count($result);
+
+		foreach($result as $row) {
+			//print_r($row);
+		}
+	}
+
+	if (count($result)) {
+		// Return a random station_id
+		return $result[array_rand($result)]['id'];
+	} else {
+		// Show that there aren't available stations
+		return -1;
+	}
+}
+
+function checkPostData() {
+	$valid_post_data = isset($_POST['latitude'])
+							AND isset($_POST['longitude'])
+							AND isset($_POST['station_id']);
+
+	if ($valid_post_data) {
+		$station_id = intval($_POST['station_id']);
+		$latitude = floatval($_POST['latitude']);
+		$longitude = floatval($_POST['longitude']);
+		$sender_ip = $_SERVER['REMOTE_ADDR'];
+
+		$valid_latitude_longitude = $_POST['latitude'] != ''
+									AND $_POST['longitude'] != '';
+
+		if ($valid_latitude_longitude) {
+			// Create a point
+			$point = new Point();
+			$point->set('station_id', $station_id);
+			$point->set('latitude', $latitude);
+			$point->set('longitude', $longitude);
+			$point->set('sender_ip', $sender_ip);
+			$point->create();
+		} else {
+			// TO DO: Return error
+			//echo 'ERROR LAT LON';
+		}
+	}	
 }
