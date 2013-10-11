@@ -14,6 +14,11 @@ function _index() {
 
 	// Station data
 	$station_id = getNextStation();
+	if ($station_id === -1) {
+		// No station available
+		$station_id = 5001;
+	}
+
 	$station = new Station();
 
 	// Get result set for that station ID
@@ -50,24 +55,19 @@ function getNextStation() {
 	// Get already voted places not submitted by the current user
 	$query = "SELECT station_id
 		FROM 'points'
-		WHERE sender_ip IS NOT '$ip_address'
 		GROUP BY station_id
 		HAVING count(1) BETWEEN 1 AND $min_points
+			AND sender_ip != '$ip_address'
 		;";
 
-	//echo $query;
-
 	$result = $db->query($query)->fetchAll();
-	foreach($result as $row) {
-		//print_r($row);
-	}
 
-	//echo 'Found: ' . count($result);
-	
+	//print_r($query);
+	//print_r($result);
 
-	if (count($result) == 0) {
+	if (count($result) === 0) {
 		// Get avaliable stations not voted by me
-		$query = "SELECT s.id
+		$query = "SELECT DISTINCT s.id AS station_id
 			FROM 'stations' AS s
 			CROSS JOIN points AS p
 			WHERE s.id NOT IN (
@@ -79,16 +79,11 @@ function getNextStation() {
 			;";
 
 		$result = $db->query($query)->fetchAll();
-		//echo 'Found: ' . count($result);
-
-		foreach($result as $row) {
-			//print_r($row);
-		}
 	}
 
-	if (count($result)) {
+	if (count($result) > 0) {
 		// Return a random station_id
-		return $result[array_rand($result)]['id'];
+		return $result[array_rand($result)]['station_id'];
 	} else {
 		// Show that there aren't available stations
 		return -1;
